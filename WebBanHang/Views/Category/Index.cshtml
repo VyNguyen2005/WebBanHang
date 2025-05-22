@@ -1,11 +1,11 @@
-﻿@model WebBanHang.Models.ViewModels.PagingModel
+﻿@model List<Category>
 
 <partial name="_ThongBao" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
 <div class="row my-4">
     <div class="col-md-6">
-        <h2>LIST PRODUCT</h2>
+        <h2>LIST CATEGORY</h2>
     </div>
     <div class="col-md-6 text-end">
         <a asp-action="Add" class="btn btn-primary">
@@ -17,25 +17,17 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Action </th>
+            <th>Display Order</th>
+            <th> Action </th>
         </tr>
+
     </thead>
     <tbody>
-        @foreach (var x in Model.Products)
+        @foreach (var x in Model)
         {
             <tr>
                 <td>@x.Name</td>
-                <td>@x.Price.ToString("#,##0 VND")</td>
-                <td>@x.Category.Name</td>
-                <td>
-                    @if (x.ImageUrl != null)
-                    {
-                        <img src="@x.ImageUrl" style="width:100px" />
-                    }
-                </td>
+                <td>@x.DisplayOrder</td>
                 <td>
                     <a asp-action="Update" asp-route-id="@x.Id" class="btn btn-success">
                         <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -48,14 +40,3 @@
         }
     </tbody>
 </table>
-
-@{
-    var paginationModel = new WebBanHang.Models.ViewModels.PagingModel()
-    {
-        Products = Model.Products,
-        CurrentPage = Model.CurrentPage,
-        CountPages = Model.CountPages,
-        GenerateUrl = Model.GenerateUrl
-    };
-}
-<partial name="_Paging" model="@paginationModel"/>
