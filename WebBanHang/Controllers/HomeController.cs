@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,25 @@ namespace WebBanHang.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly MyWebContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MyWebContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var pageSize = 3;
+            var productList = _db.Products.Include(x => x.Category).ToList();
+            return View(productList.Skip(0).Take(pageSize).ToList());
+        }
+        public IActionResult LoadMore(int page = 1)
+        {
+            var pageSize = 3;
+            var productList = _db.Products.Include(x => x.Category).ToList();
+            return PartialView("_ProductPartial", productList.Skip((page - 1) * pageSize).Take(pageSize).ToList());
         }
 
         public IActionResult Privacy()
