@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebBanHang.Models
 {
-    public class MyWebContext : IdentityDbContext<IdentityUser>
+    public class MyWebContext : IdentityDbContext<AppUser>
     {
         public MyWebContext(DbContextOptions<MyWebContext> options) : base(options)
         {

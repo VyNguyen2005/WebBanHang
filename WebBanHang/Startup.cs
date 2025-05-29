@@ -26,12 +26,11 @@ namespace WebBanHang
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<MyWebContext>(options =>
-            {
-                options.UseSqlServer("name=ConnectionString");
-            });
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<MyWebContext>().AddDefaultTokenProviders();
+            options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<MyWebContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +51,8 @@ namespace WebBanHang
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
