@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebBanHang.Models
 {
-    public class MyWebContext : DbContext
+    public class MyWebContext : IdentityDbContext<IdentityUser>
     {
         public MyWebContext(DbContextOptions<MyWebContext> options) : base(options)
         {
@@ -14,6 +16,7 @@ namespace WebBanHang.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Điện thoại", DisplayOrder = 1 },
             new Category { Id = 2, Name = "Máy tính bảng", DisplayOrder = 2 },
