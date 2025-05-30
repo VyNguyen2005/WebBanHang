@@ -10,8 +10,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(MyWebContext))]
-    [Migration("20250529170849_ExtendColumnIdentity")]
-    partial class ExtendColumnIdentity
+    [Migration("20250530003001_addIdentity")]
+    partial class addIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
