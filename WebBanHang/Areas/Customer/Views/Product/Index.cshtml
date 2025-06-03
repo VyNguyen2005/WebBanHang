@@ -1,52 +1,42 @@
 ﻿@model List<Product>
+@{
+    ViewData["CATEGORY_NAME"] = ViewBag.CATEGORY_NAME;
+}
 
 <div class="row mt-3">
-    <div id="list-category" class="col-md-3">
-        <h2>List Category</h2>
+    <div id="category-list" class="col-md-3">
+        <h3>List Product</h3>
         <ul class="list-group">
             @foreach (var c in (List<CategoryViewModel>)ViewBag.listCategory)
             {
-                <a asp-action="Index" asp-route-id="@c.Id" class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
-                    @c.Name
-                    <span class="badge bg-primary rounded-pill">@c.TotalProduct</span>
-                </a>
+                <li class="list-group-item p-0">
+                    <a href="#" data-catid="@c.Id" class="catid-item d-flex justify-content-between align-items-center px-3 py-2 w-100 d-block text-decoration-none">
+                        @c.Name
+                        <span class="badge bg-primary rounded-pill">@c.TotalProduct</span>
+                    </a>
+                </li>
             }
         </ul>
+
     </div>
     <div class="col-md-9">
-        <h2>List Product of @ViewBag.categoryName</h2>
-        <div class="row">
-            @foreach (var p in Model)
-            {
-                <div class="card mb-3 col-md-4">
-                    <h3 class="card-header">@p.Name</h3>
-                    <div class="card-body">
-                        <h5 class="card-title">Giá: @p.Price.ToString("#,##0") VND</h5>
-                        <h6 class="card-subtitle text-muted">Danh mục: @p.Name</h6>
-                    </div>
-                    @if (!string.IsNullOrEmpty(p.ImageUrl))
-                    {
-                        <img src="/@p.ImageUrl" class="img-fluid" />
-                    }
-                    else
-                    {
-                        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                        </svg>
-                    }
-                    <div class="card-body">
-                        <p class="card-text">@p.Description</p>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="btn btn-success">Xem</a>
-                        <a href="#" class="btn btn-primary">Thêm vào giỏ hàng</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>
-            }
+        <div id="product-list">
+            @await Html.PartialAsync("ProductPartial", Model, ViewData)
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
+        $(".catid-item").click(function (evt) {
+            evt.preventDefault();
+            let catid = $(this).data("catid");
+            $.ajax({
+                url: "/Customer/Product/LoadPartial",
+                data: { catid: catid },
+                success: function (data) {
+                    $("#product-list").html(data);
+                }
+            });
+        });
+    </script>
+}

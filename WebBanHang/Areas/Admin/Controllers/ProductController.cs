@@ -170,7 +170,7 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
-            });
+            }).ToList();
             return View();
         }
     }

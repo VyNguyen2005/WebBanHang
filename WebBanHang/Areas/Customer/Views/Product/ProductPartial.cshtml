@@ -1,0 +1,42 @@
+﻿@model List<Product>
+<h3 class="text-uppercase"> Product List Of @ViewBag.CATEGORY_NAME</h3>
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var p in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <h3 class="card-header">@p.Name</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">Giá: @p.Price.ToString("#,##0") VND</h5>
+                        <h6 class="card-subtitle text-muted">Danh mục: @p.Category?.Name</h6>
+                    </div>
+                    @if (!string.IsNullOrEmpty(p.ImageUrl))
+                    {
+                        <img src="/@p.ImageUrl" class="img-fluid" />
+                    }
+                    else
+                    {
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <rect width="100%" height="100%" fill="#868e96"></rect>
+                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+                        </svg>
+                    }
+                    <div class="card-body">
+                        <p class="card-text">@p.Description</p>
+                        <a href="#" class="btn btn-success">Xem</a>
+                        <a href="#" class="btn btn-primary">Thêm vào giỏ hàng</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        2 ngày trước
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">Không có sản phẩm nào</div>
+    }
+</div>

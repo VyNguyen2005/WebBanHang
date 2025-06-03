@@ -22,11 +22,19 @@ namespace WebBanHang.Areas.Customer.Controllers
             var listCategory = _db.Categories.OrderBy(x => x.DisplayOrder)
                                              .Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name, TotalProduct = _db.Products.Where(p => p.CategoryId == c.Id).Count() }).ToList()
                                              .ToList();
-            var listProduct = _db.Products.Where(x => x.CategoryId == id).ToList();
-            var categoryName = _db.Categories.FirstOrDefault(x => x.Id == id)?.Name;
+            int selectedId = id ?? listCategory.FirstOrDefault()?.Id ?? 1;
+            var listProduct = _db.Products.Where(x => x.CategoryId == selectedId).ToList();
+            var categoryName = _db.Categories.FirstOrDefault(x => x.Id == selectedId)?.Name;
             ViewBag.listCategory = listCategory;
-            ViewBag.categoryName = categoryName;
+            ViewBag.CATEGORY_NAME = categoryName;
             return View(listProduct);
+        }
+        public IActionResult LoadPartial(int catid = 1)
+        {
+            var dsSanPham = _db.Products.Where(p => p.CategoryId == catid).ToList();
+            var catName = _db.Categories.Find(catid).Name;
+            ViewBag.CATEGORY_NAME = catName;
+            return PartialView("ProductPartial", dsSanPham);
         }
     }
 }
