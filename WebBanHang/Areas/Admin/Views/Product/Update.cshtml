@@ -6,7 +6,7 @@
     <input asp-for="Id" type="hidden" />
     <div class="row">
         <div class="col-md-4">
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            @if (Model != null && !string.IsNullOrEmpty(Model.ImageUrl))
             {
                 <img src="/@Model.ImageUrl" style="width:300px" id="previewImage" />
             }
