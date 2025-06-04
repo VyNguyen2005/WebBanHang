@@ -9,12 +9,13 @@
         <ul class="list-group">
             @foreach (var c in (List<CategoryViewModel>)ViewBag.listCategory)
             {
-                <li class="list-group-item p-0">
-                    <a href="#" data-catid="@c.Id" class="catid-item d-flex justify-content-between align-items-center px-3 py-2 w-100 d-block text-decoration-none">
-                        @c.Name
-                        <span class="badge bg-primary rounded-pill">@c.TotalProduct</span>
-                    </a>
-                </li>
+             var isActive = c.Id == 1 ? "active" : "";
+            <li class="list-group-item p-0">
+                <a href="#" data-catid="@c.Id" class="catid-item list-group-item list-group-item-action @isActive d-flex justify-content-between align-items-center">
+                    @c.Name
+                    <span class="badge bg-primary rounded-pill">@c.TotalProduct</span>
+                </a>
+            </li>
             }
         </ul>
 
@@ -30,6 +31,8 @@
         $(".catid-item").click(function (evt) {
             evt.preventDefault();
             let catid = $(this).data("catid");
+            $(".catid-item").removeClass("active");
+            $(this).addClass("active");
             $.ajax({
                 url: "/Customer/Product/LoadPartial",
                 data: { catid: catid },

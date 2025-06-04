@@ -27,6 +27,7 @@ namespace WebBanHang
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddDbContext<MyWebContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
@@ -61,6 +62,8 @@ namespace WebBanHang
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
