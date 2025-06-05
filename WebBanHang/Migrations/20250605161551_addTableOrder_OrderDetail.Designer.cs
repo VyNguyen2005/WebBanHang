@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBanHang.Models;
 
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(MyWebContext))]
-    partial class MyWebContextModelSnapshot : ModelSnapshot
+    [Migration("20250605161551_addTableOrder_OrderDetail")]
+    partial class addTableOrder_OrderDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

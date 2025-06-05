@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebBanHang</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .btn-outline-light:hover {
+            background-color: white !important;
+            color: black !important;
+            border-color: white !important;
+        }
+
+        .showcart {
+            font-size: 0.65rem;
+            padding: 2px 5px;
+        }
+
+        .btn-outline-light:hover .badge {
+            background-color: black !important;
+            color: white !important;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,13 +37,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Product" asp-action="Index">Product</a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="Product" asp-action="Index">Product</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial"/>
+                    <form asp-action="Index" asp-controller="Cart" class="d-flex align-items-center">
+                        <button type="submit" class="btn position-relative border-0 bg-transparent p-0">
+                            <i class="fa-solid fa-cart-shopping fs-5 text-white"></i>
+                            <span class="showcart badge bg-danger text-white rounded-circle position-absolute top-0 start-100 translate-middle p-1 small">
+                                0
+                            </span>
+                        </button>
+                    </form>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -43,6 +69,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
