@@ -8,38 +8,50 @@
                 <div class="card border shadow-0 mt-3">
                     <div class="m-4">
                         <h4 class="card-title mb-4">Your shopping cart</h4>
-                        @foreach (var item in Model.Items)
+                        @if (Model.Items.Count == 0)
                         {
-                            <form asp-action="Update" method="post">
-                                <input type="hidden" name="productId" value="@item.Product.Id" />
-                                <div class="row gy-3 mb-4">
-                                    <div class="col-lg-5">
-                                        <div class="me-lg-5">
-                                            <div class="d-flex">
-                                                <img src="/@item.Product.ImageUrl" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                                <div class="">
-                                                    <a href="#" class="nav-link">@item.Product.Name</a>
+                            <div class="text-center p-5">
+                                <h4 class="mb-3">Giỏ hàng đang trống</h4>
+                                <p>Hãy tiếp tục việc mua sắm bằng cách chọn vào đây nhé!</p>
+                                <a href="/customer/home/index" class="btn btn-primary mt-3">Go Shopping</a>
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.Items)
+                            {
+                                <form asp-action="Update" method="post">
+                                    <input type="hidden" name="productId" value="@item.Product.Id" />
+                                    <div class="row gy-3 mb-4">
+                                        <div class="col-lg-5">
+                                            <div class="me-lg-5">
+                                                <div class="d-flex">
+                                                    <img src="/@item.Product.ImageUrl" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                                                    <div class="">
+                                                        <a href="#" class="nav-link">@item.Product.Name</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                        <div class="">
-                                            <text class="h6">@string.Format("${0:#,##0}", item.Product.Price)</text> <br />
+                                        <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                                            <div class="">
+                                                <text class="h6">@string.Format("${0:#,##0}", item.Product.Price)</text> <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                            <div class="cart-item float-md-end" data-productid="@item.Product.Id">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm me-1 btn-decrease">−</button>
+                                                <span class="quantity-display" data-quantity="@item.Quantity">@item.Quantity</span>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1 btn-increase">+</button>
+                                                <button type="button" data-productId="@item.Product.Id" class="update-cart btn btn-light border text-primary ms-2">Update</button>
+                                                <a asp-action="Remove" data-productid="@item.Product.Id" asp-controller="Cart" asp-route-productId="@item.Product.Id" class="remove-from-cart btn btn-light border text-danger ms-2">Remove</a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                        <div class="cart-item float-md-end" data-productid="@item.Product.Id">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm me-1 btn-decrease">−</button>
-                                            <span class="quantity-display" data-quantity="@item.Quantity">@item.Quantity</span>
-                                            <button type="button" class="btn btn-outline-secondary btn-sm ms-1 btn-increase">+</button>
-                                            <button type="button" data-productId="@item.Product.Id" class="update-cart btn btn-light border text-primary ms-2">Update</button>
-                                            <a asp-action="Remove" asp-controller="Cart" asp-route-productId="@item.Product.Id" class="remove-from-cart btn btn-light border text-danger ms-2">Remove</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            }
                         }
+
                     </div>
                 </div>
             </div>

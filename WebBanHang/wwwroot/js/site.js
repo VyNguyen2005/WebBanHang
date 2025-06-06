@@ -74,3 +74,4 @@ $(document).on("click", ".update-cart", function () {
         }
     });
 });
+

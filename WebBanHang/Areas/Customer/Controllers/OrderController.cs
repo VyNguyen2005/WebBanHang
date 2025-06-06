@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebBanHang.Areas.Customer.Models;
 using WebBanHang.Models;
 
 namespace WebBanHang.Areas.Customer.Controllers
 {
+    [Authorize]
     [Area("Customer")]
     public class OrderController : Controller
     {

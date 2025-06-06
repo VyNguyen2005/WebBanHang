@@ -138,9 +138,10 @@ namespace WebBanHang.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Update(Product product, IFormFile ImageUrl)
         {
+            var existingProduct = _db.Products.Find(product.Id);
             if (ModelState.IsValid) 
             {
-                var existingProduct = _db.Products.Find(product.Id);
+                
                 if (ImageUrl != null)
                 {
                     product.ImageUrl = SaveImage(ImageUrl);
@@ -171,7 +172,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 Value = x.Id.ToString(),
                 Text = x.Name
             }).ToList();
-            return View();
+            return View(existingProduct);
         }
     }
 }

@@ -95,14 +95,14 @@ namespace WebBanHang.Areas.Customer.Controllers
             return Json(new { msg = "Error" });
         }
         [HttpPost]
-        public IActionResult RemoverFromCartAPI(int productId)
+        public IActionResult RemoveFromCartAPI(int productId)
         {
             var cart = HttpContext.Session.GetJson<Cart>("CART");
             if (cart != null)
             {
                 cart.Remove(productId);
                 HttpContext.Session.SetJson("CART", cart);
-                return Json(new { msg = "Removed", quantity = cart.Quantity });
+                return Json(new { msg = "Removed", quantity = cart.Quantity, total = cart.Total.ToString("#,##0") });
             }
             return Json(new { msg = "Error" });
         }
